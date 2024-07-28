@@ -21,16 +21,18 @@ function Header() {
     ]
     return (
         <>
-          {
-           navItem.map((item)=>(
+          
+            <div className=' flex list-none float-right '>
+        {navItem.map((item)=>(
 
             item.active ?
-            <button onClick={()=>navigate(item.slug)} className='p-2 rounded-md m-2 font-bold' key={item.slug}>
+            <li onClick={()=>navigate(item.slug)} className=' m-2 font-semibold text-xl cursor-pointer' key={item.slug}>
                 {item.item}
-            </button>
+            </li>
              :null
-           ))
-          }
+           ))}
+           </div>
+         
             {authStatus === true ? <button className='p-2 rounded-md m-2 font-bold' onClick={() => {
                 Auth.logout().then(() => {
                     dispatch(logout())

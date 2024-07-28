@@ -5,7 +5,7 @@ import Auth from '../Appwrite/Auth'
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { login } from '../Store/Authslice';
-function Login() {
+function Signup() {
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -15,8 +15,10 @@ function Login() {
       console.log("signup", data);
       if (session) {
         const userdata = await Auth.getUser();
-        if (userdata) 
+        if (userdata) {
           dispatch(login({ userdata }));
+        console.log("Signup done");
+        }
         navigate('/');
       }
     } catch (error) {
@@ -25,21 +27,42 @@ function Login() {
   }
   return (
     <>
-      <form onSubmit={handleSubmit(signup)}>
-        <h1>Signup</h1>
-        <Input placeholder="name" type="text" {...register("name", {
+    <form onSubmit={handleSubmit(signup)}>
+     <div className='mx-auto w-full max-w-lg  rounded-xl p-10 border border-black/10 
+       shadow-xl '>  
+        <h1 className='text-3xl font-semibold'>Signup</h1>
+       <div className='relative mt-6'>
+       <Input  type="text" placeholder="name" title="Full name"
+       className="peer mt-1 w-full border-b-2 border-gray-300 px-0 py-1 
+       placeholder:text-transparent
+       focus:border-gray-500 focus:outline-none"
+        {...register("name", {
+          required: true,
+        })} /></div> 
+
+        <div className='relative mt-6'>
+        <Input placeholder="email" type="email" title="Email Address"
+        className="peer mt-1 w-full border-b-2 border-gray-300 px-0 py-1 placeholder:text-transparent focus:border-gray-500 focus:outline-none"
+         {...register("email", {
           required: true,
         })} />
-        <Input placeholder="email" type="email" {...register("email", {
+        </div>
+
+        <div className=' relative mt-6'> 
+        <Input placeholder="password" type="password" title="Password"
+        className="peer mt-1 w-full border-b-2 border-gray-300 px-0 py-1 placeholder:text-transparent focus:border-gray-700 focus:outline-none"
+        {...register("password", {
           required: true,
         })} />
-        <Input placeholder="password" type="password" {...register("password", {
-          required: true,
-        })} />
-        <Button>Create Account</Button>
+        </div>
+      
+        <Button className='w-full rounded-md bg-black text-white px-3 py-4 mt-6'>Create Account</Button>
+       
+     
+      </div>
       </form>
     </>
   )
 }
 
-export default Login
+export default Signup

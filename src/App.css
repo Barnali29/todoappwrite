@@ -4,9 +4,7 @@
 @tailwind utilities;
 .App {
   text-align: center;
-  background-color: rgb(118, 244, 118);
-  max-height: 100vh;
-  max-width: 100vw;
+ 
 }
 
 .App-logo {
