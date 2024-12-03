@@ -101,13 +101,17 @@ class service{
                 const promise = await this.databases.createCollection(Config.appwritedatabase_id,
                     collectionId,
                     'Collection for User ' + UserId);
-                if (promise) console.log("Collection created successfully", promise);
+                if (promise) {
+                    console.log("Collection created successfully", promise);
+                    const attributeCreation=await this.databases.createStringAttribute(Config.appwritedatabase_id,collectionId,"data",256,true);
+                    if(attributeCreation) console.log("Attribute created successfully");
+                }
             } catch (error) {
                 console.log("Error at create Collection", error);
             }
         }
     
-        async addDocumentToUserCollection(userId, data) {
+        async addDocumentToUserCollection({userId, data}) {
             try {
                 const collectionId = `user_${userId}_collection`;
                 const collectionExists = await this.checkCollectionExists(collectionId);
@@ -120,11 +124,20 @@ class service{
                     Config.appwritedatabase_id,
                     collectionId,
                     ID.unique(),
-                    data
+                    {data}
                 );
                 console.log('Document added:', response);
             } catch (error) {
                 console.error('Error adding document:', error);
+            }
+        }
+
+        async listDocuments(userId){
+            try {
+                const collectionId = `user_${userId}_collection`;
+                return await this.databases.listDocuments(Config.appwritedatabase_id,collectionId);
+            } catch (error) {
+                console.log("Error in listing documetns",error)
             }
         }
     }

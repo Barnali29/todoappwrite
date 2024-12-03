@@ -21,8 +21,8 @@ function App() {
   }, [])
   return (
     <div className='App'>
-      <Header />
-      {loading ? <div>Loading ...</div> : null}
+     
+      {loading ? <div>Loading ...</div> :  <Header />}
       <Outlet />
     </div>
   );

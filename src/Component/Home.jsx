@@ -10,28 +10,29 @@ function Home() {
     const [items, setItems] = useState([]);
     const [input, setInput] = useState('');
 
-   /* useEffect(() => {
-        async function fetchDocuments() {
-            try {
-                const result = await Service.getAllDocuments();
-                setItems(result.documents);
-            } catch (error) {
-                console.error('Error fetching documents:', error);
-            }
-        }
+   /* async function fetchList(){
+        const userid = await Auth.getUserId();
+        const data=await Service.listDocuments(userid);
+      if(data)  data.map((doc)=>setItems((prev)=>[...prev,doc.documents.data]));
+        console.log(items);
+    }
+*/
+  //  useEffect(()=>{fetchList()},[authStatus])
+ // fetchList();
 
-        fetchDocuments();
-    }, []);*/
-
-    async function add() {
+    const add=async()=> {
         console.log(input);
         try {
-            const userId = await Auth.getUserId();
-            const doc = await Service.addDocumentToUserCollection(userId, { task: input });
-            if (doc) {
+            const userid = await Auth.getUserId();
+            const doc = await Service.addDocumentToUserCollection({userId:userid, data:input});
+         /*   if (doc) {
                 console.log("Successfully added data");
-                //setItems((prevItems) => [...prevItems, doc]); 
-            }
+                setItems((prevItems) => [...prevItems, doc]); 
+            }*/
+        
+        
+            console.log(items);
+           
         } catch (error) {
             console.error('Error adding document:', error);
         }
